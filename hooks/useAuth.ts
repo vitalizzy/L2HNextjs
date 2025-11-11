@@ -41,7 +41,7 @@ export function useAuth() {
     // Subscribe to auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (session?.user) {
         setUser(session.user as User);
         setIsAuthenticated(true);
@@ -110,6 +110,11 @@ export function useAuth() {
           message: "Registro exitoso. Por favor confirma tu email.",
         };
       }
+
+      return {
+        success: false,
+        message: "Error desconocido en el registro",
+      };
     } catch (error) {
       console.error("Register error:", error);
       throw error;
