@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 
 export function RegisterForm() {
@@ -14,6 +14,7 @@ export function RegisterForm() {
   });
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const { register } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -164,13 +165,21 @@ export function RegisterForm() {
           />
           <label htmlFor="gdprAccept" className="ml-2 block text-sm text-gray-700">
             Acepto los{" "}
-            <Link href="/privacy-policy" className="text-blue-600 hover:underline">
+            <button
+              type="button"
+              onClick={() => router.push("/privacy-policy")}
+              className="text-blue-600 hover:underline cursor-pointer"
+            >
               términos y condiciones
-            </Link>{" "}
+            </button>{" "}
             y la{" "}
-            <Link href="/privacy-policy" className="text-blue-600 hover:underline">
+            <button
+              type="button"
+              onClick={() => router.push("/privacy-policy")}
+              className="text-blue-600 hover:underline cursor-pointer"
+            >
               política de privacidad
-            </Link>
+            </button>
           </label>
         </div>
 
@@ -186,9 +195,13 @@ export function RegisterForm() {
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-600">
           ¿Ya tienes cuenta?{" "}
-          <Link href="/auth/login" className="text-blue-600 hover:underline font-semibold">
+          <button
+            type="button"
+            onClick={() => router.push("/login")}
+            className="text-blue-600 hover:underline font-semibold cursor-pointer"
+          >
             Inicia sesión
-          </Link>
+          </button>
         </p>
       </div>
     </div>

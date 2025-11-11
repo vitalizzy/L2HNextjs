@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 const protectedRoutes = ["/dashboard", "/profile", "/change-password"];
 
 // Rutas que solo deben ser accesibles sin autenticación
-const authRoutes = ["/auth/login", "/auth/register", "/auth/forgot-password"];
+const authRoutes = ["/login", "/register", "/forgot-password", "/reset-password", "/change-password"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
   if (protectedRoutes.some((route) => pathname.startsWith(route))) {
     if (!supabaseToken) {
       const url = request.nextUrl.clone();
-      url.pathname = "/auth/login";
+      url.pathname = "/login";
       url.searchParams.set("redirected", "true");
       return NextResponse.redirect(url);
     }
@@ -42,6 +42,9 @@ export const config = {
     "/profile/:path*",
     "/change-password/:path*",
     // Auth routes
-    "/auth/:path*",
+    "/login/:path*",
+    "/register/:path*",
+    "/forgot-password/:path*",
+    "/reset-password/:path*",
   ],
 };

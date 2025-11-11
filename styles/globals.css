@@ -25,11 +25,12 @@
 }
 
 * {
-  @apply border-border;
+  border-color: hsl(var(--border, 214.3 31.8% 91.4%));
 }
 
 body {
-  @apply bg-background text-foreground;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
 }
 
 /* Scrollbar */
@@ -39,15 +40,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-secondary;
+  background-color: hsl(var(--secondary));
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-muted rounded-lg;
+  background-color: hsl(var(--muted));
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-muted-foreground;
+  background-color: hsl(var(--muted-foreground));
 }
 
 /* Loading animation */

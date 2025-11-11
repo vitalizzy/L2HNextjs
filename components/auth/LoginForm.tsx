@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 
 export function LoginForm() {
@@ -9,6 +9,7 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -95,15 +96,23 @@ export function LoginForm() {
       <div className="mt-6 text-center space-y-2">
         <p className="text-sm text-gray-600">
           ¿No tienes cuenta?{" "}
-          <Link href="/auth/register" className="text-blue-600 hover:underline font-semibold">
+          <button
+            type="button"
+            onClick={() => router.push("/register")}
+            className="text-blue-600 hover:underline font-semibold cursor-pointer"
+          >
             Registrate aquí
-          </Link>
+          </button>
         </p>
         <p className="text-sm text-gray-600">
           ¿Olvidaste tu contraseña?{" "}
-          <Link href="/auth/forgot-password" className="text-blue-600 hover:underline font-semibold">
+          <button
+            type="button"
+            onClick={() => router.push("/forgot-password")}
+            className="text-blue-600 hover:underline font-semibold cursor-pointer"
+          >
             Recuperarla
-          </Link>
+          </button>
         </p>
       </div>
     </div>

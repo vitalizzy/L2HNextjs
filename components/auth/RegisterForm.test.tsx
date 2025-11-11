@@ -6,12 +6,12 @@ import { useAuth } from '@/hooks/useAuth'
 
 // Mock the useAuth hook
 jest.mock('@/hooks/useAuth')
-// Mock next/link
-jest.mock('next/link', () => {
-  return ({ children, href }: any) => (
-    <a href={href}>{children}</a>
-  )
-})
+// Mock next/navigation
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
+}))
 
 const mockRegister = jest.fn()
 
