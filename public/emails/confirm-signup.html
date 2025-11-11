@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Confirma tu cuenta en L2H Community</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .greeting {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #1f2937;
+        }
+
+        .greeting strong {
+            color: #2563eb;
+        }
+
+        .message {
+            background-color: #f0f9ff;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #1e40af;
+        }
+
+        .message p {
+            margin: 0;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            padding: 14px 40px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: 2px solid #2563eb;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .alt-link {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .alt-link p {
+            margin: 5px 0;
+        }
+
+        .alt-link a {
+            color: #2563eb;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .alt-link a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            margin: 30px 0;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .instructions {
+            background-color: #fffbeb;
+            border: 1px solid #fcd34d;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 30px 0;
+        }
+
+        .instructions h3 {
+            color: #92400e;
+            font-size: 15px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            color: #78350f;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .security-notice {
+            background-color: #fef2f2;
+            border-left: 4px solid #dc2626;
+            padding: 15px;
+            margin: 30px 0;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #7f1d1d;
+        }
+
+        .security-notice strong {
+            color: #dc2626;
+        }
+
+        .footer {
+            background-color: #f9fafb;
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .footer p {
+            margin: 8px 0;
+        }
+
+        .footer a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            display: inline-block;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 11px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎉 ¡Bienvenido a L2H Community!</h1>
+            <p>Confirma tu correo electrónico para activar tu cuenta</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Greeting -->
+            <div class="greeting">
+                ¡Hola <strong>{{ .Email }}</strong>!
+            </div>
+
+            <!-- Main Message -->
+            <div class="message">
+                <p>Gracias por registrarte en <strong>L2H Community</strong>. Para completar tu registro y acceder a todas las funciones de nuestra plataforma, necesitamos que confirmes tu dirección de correo electrónico.</p>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <a href="{{ .ConfirmationURL }}" class="cta-button">Confirmar mi correo electrónico</a>
+
+                <div class="alt-link">
+                    <p><strong>O copia este enlace en tu navegador:</strong></p>
+                    <p><a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a></p>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="instructions">
+                <h3>📋 ¿Qué sucede después?</h3>
+                <ol>
+                    <li>Haz clic en el botón "Confirmar mi correo electrónico" arriba</li>
+                    <li>Serás redirigido a L2H Community</li>
+                    <li>¡Accede con tus credenciales y comienza a usar la plataforma!</li>
+                </ol>
+            </div>
+
+            <!-- Security Notice -->
+            <div class="security-notice">
+                <p><strong>🔒 Nota de seguridad:</strong> Si no creaste esta cuenta, por favor ignora este correo o contacta con nuestro equipo de soporte.</p>
+            </div>
+
+            <!-- Divider -->
+            <div class="divider"></div>
+
+            <!-- Additional Info -->
+            <div style="font-size: 14px; color: #4b5563; line-height: 1.8;">
+                <p style="margin-bottom: 15px;"><strong>¿Necesitas ayuda?</strong></p>
+                <p>Si tienes problemas para confirmar tu correo:</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Revisa tu carpeta de spam o correo no deseado</li>
+                    <li>Asegúrate de que el correo no ha expirado (válido por 24 horas)</li>
+                    <li>Contacta con nuestro equipo: <a href="mailto:support@l2h.community" style="color: #2563eb; text-decoration: none;">support@l2h.community</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>L2H Community</strong> - Conectando mentes, construyendo el futuro</p>
+            <p>© 2024 L2H Community. Todos los derechos reservados.</p>
+            
+            <div class="social-links">
+                <a href="https://l2h.community">Sitio Web</a>
+                <span style="color: #d1d5db;">•</span>
+                <a href="https://l2h.community/privacy">Privacidad</a>
+                <span style="color: #d1d5db;">•</span>
+                <a href="https://l2h.community/terms">Términos</a>
+            </div>
+
+            <p style="margin-top: 15px; font-size: 11px; color: #9ca3af;">
+                Este correo fue enviado a <strong>{{ .Email }}</strong> porque creaste una cuenta en L2H Community.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

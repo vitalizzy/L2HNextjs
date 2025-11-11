@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Confirmar cambio de correo electrónico - L2H Community</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .greeting {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #1f2937;
+            line-height: 1.8;
+        }
+
+        .email-change-box {
+            background-color: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #1e40af;
+        }
+
+        .email-change-box p {
+            margin: 10px 0;
+        }
+
+        .email-change-box strong {
+            color: #1e3a8a;
+            display: block;
+            margin: 15px 0 10px 0;
+        }
+
+        .email-address {
+            background-color: white;
+            border: 1px solid #bfdbfe;
+            padding: 12px;
+            border-radius: 4px;
+            margin: 8px 0;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        .email-from {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .email-to {
+            color: #16a34a;
+            font-weight: 600;
+        }
+
+        .warning-box {
+            background-color: #fee2e2;
+            border-left: 4px solid #dc2626;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #7f1d1d;
+        }
+
+        .warning-box strong {
+            color: #dc2626;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            padding: 14px 40px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: 2px solid #3b82f6;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .alt-link {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .alt-link p {
+            margin: 5px 0;
+        }
+
+        .alt-link a {
+            color: #3b82f6;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .alt-link a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            margin: 30px 0;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .expiry-notice {
+            background-color: #fef3c7;
+            border: 1px solid #fcd34d;
+            padding: 15px;
+            margin: 30px 0;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #78350f;
+        }
+
+        .expiry-notice strong {
+            color: #b45309;
+        }
+
+        .security-info {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 30px 0;
+        }
+
+        .security-info h3 {
+            color: #166534;
+            font-size: 15px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .security-info p {
+            color: #15803d;
+            font-size: 14px;
+            line-height: 1.8;
+            margin: 8px 0;
+        }
+
+        .footer {
+            background-color: #f9fafb;
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .footer p {
+            margin: 8px 0;
+        }
+
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            display: inline-block;
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 11px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>✉️ Cambio de correo electrónico</h1>
+            <p>Confirma tu nuevo correo electrónico</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Greeting -->
+            <div class="greeting">
+                ¡Hola!<br><br>
+                Recibimos una solicitud para cambiar el correo electrónico asociado a tu cuenta en L2H Community.
+            </div>
+
+            <!-- Email Change Details -->
+            <div class="email-change-box">
+                <p><strong>Cambio de correo electrónico:</strong></p>
+                <p>
+                    <span class="email-from">De:</span> {{ .Email }}<br>
+                    <span class="email-to">Para:</span> {{ .NewEmail }}
+                </p>
+                <p style="margin-top: 15px; font-size: 14px;">
+                    Para completar este cambio, necesitamos que confirmes tu nuevo correo electrónico haciendo clic en el botón de abajo.
+                </p>
+            </div>
+
+            <!-- Warning -->
+            <div class="warning-box">
+                <p><strong>⚠️ Importante:</strong> Si no solicitaste este cambio, <strong>no hagas clic en el botón de abajo</strong> y contacta inmediatamente con nuestro equipo de soporte.</p>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <a href="{{ .ConfirmationURL }}" class="cta-button">Confirmar cambio de correo</a>
+
+                <div class="alt-link">
+                    <p><strong>O copia este enlace en tu navegador:</strong></p>
+                    <p><a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a></p>
+                </div>
+            </div>
+
+            <!-- Expiry Notice -->
+            <div class="expiry-notice">
+                <p><strong>⏰ Nota:</strong> Este enlace solo será válido por las próximas 24 horas. Si no confirmas en este tiempo, deberás solicitar un nuevo cambio.</p>
+            </div>
+
+            <!-- Security Info -->
+            <div class="security-info">
+                <h3>🔒 ¿Qué sucederá después?</h3>
+                <p>✓ Confirmaremos tu nuevo correo electrónico</p>
+                <p>✓ Tu correo anterior {{ .Email }} dejará de estar asociado a tu cuenta</p>
+                <p>✓ Usaremos tu nuevo correo para futuras comunicaciones</p>
+                <p>✓ Tu contraseña permanecerá igual</p>
+            </div>
+
+            <!-- Divider -->
+            <div class="divider"></div>
+
+            <!-- Additional Info -->
+            <div style="font-size: 14px; color: #4b5563; line-height: 1.8;">
+                <p style="margin-bottom: 15px;"><strong>¿Necesitas ayuda?</strong></p>
+                <p>Si tienes problemas o preguntas:</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Contacta con nuestro equipo: <a href="mailto:support@l2h.community" style="color: #3b82f6; text-decoration: none;">support@l2h.community</a></li>
+                    <li>Asegúrate de que el enlace no ha expirado</li>
+                    <li>Usa un navegador moderno y actualizado</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>L2H Community</strong> - Conectando mentes, construyendo el futuro</p>
+            <p>© 2024 L2H Community. Todos los derechos reservados.</p>
+            
+            <div class="social-links">
+                <a href="https://l2h.community">Sitio Web</a>
+                <span style="color: #d1d5db;">•</span>
+                <a href="https://l2h.community/privacy">Privacidad</a>
+                <span style="color: #d1d5db;">•</span>
+                <a href="https://l2h.community/terms">Términos</a>
+            </div>
+
+            <p style="margin-top: 15px; font-size: 11px; color: #9ca3af;">
+                Este correo fue enviado a <strong>{{ .Email }}</strong> para confirmar un cambio de correo electrónico en tu cuenta de L2H Community.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -10,6 +10,8 @@ const authRoutes = ["/login", "/register", "/forgot-password", "/reset-password"
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  console.log("[Middleware] Processing request:", pathname);
+
   // 1. ACTUALIZAR SESIÓN DE SUPABASE Y SINCRONIZAR COOKIES
   let response = NextResponse.next({
     request: {
@@ -39,14 +41,19 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  console.log("[Middleware] User found:", user?.email || "no user");
+
   // 3. PROTEGER RUTAS
   // Si intenta acceder a ruta protegida SIN usuario, redirigir a login
   if (protectedRoutes.some((route) => pathname.startsWith(route))) {
     if (!user) {
+      console.log("[Middleware] No user for protected route, redirecting to login");
       const url = request.nextUrl.clone();
       url.pathname = "/login";
       url.searchParams.set("redirected", "true");
       return NextResponse.redirect(url);
+    } else {
+      console.log("[Middleware] User authorized for protected route:", pathname);
     }
   }
 
@@ -54,6 +61,7 @@ export async function middleware(request: NextRequest) {
   // Si intenta acceder a ruta de auth ESTANDO autenticado, redirigir a dashboard
   if (authRoutes.some((route) => pathname.startsWith(route))) {
     if (user) {
+      console.log("[Middleware] User trying to access auth route, redirecting to dashboard");
       const url = request.nextUrl.clone();
       url.pathname = "/dashboard";
       return NextResponse.redirect(url);

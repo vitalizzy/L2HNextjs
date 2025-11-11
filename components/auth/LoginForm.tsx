@@ -37,12 +37,20 @@ export function LoginForm() {
       // Llamar al login
       const result = await login(email, password);
       
+      console.log("[LoginForm] Login result:", result);
+      
       if (result?.success) {
+        console.log("[LoginForm] Login successful, waiting for session sync...");
         // Esperar un poco para asegurar que la sesión se sincronizó
         await new Promise(resolve => setTimeout(resolve, 1000));
         
+        console.log("[LoginForm] About to redirect to /dashboard");
         // Redireccionar al dashboard
         router.push("/dashboard");
+        console.log("[LoginForm] router.push() executed");
+      } else {
+        console.warn("[LoginForm] Login failed:", result);
+        throw new Error("Login failed");
       }
     } catch (err) {
       if (err instanceof Error) {
