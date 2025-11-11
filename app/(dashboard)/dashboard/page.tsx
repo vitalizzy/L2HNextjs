@@ -41,12 +41,20 @@ export default function DashboardPage() {
                 Bienvenido, {user.user_metadata?.nombre || user.email}
               </p>
             </div>
-            <button
-              onClick={() => router.push("/")}
-              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
-            >
-              Cerrar Sesión
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => router.push("/profile")}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+              >
+                Mi Perfil
+              </button>
+              <button
+                onClick={() => router.push("/")}
+                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+              >
+                Cerrar Sesión
+              </button>
+            </div>
           </div>
         </div>
       </header>
