@@ -4,7 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 
+console.log("[LoginForm] ✅ LoginForm component loaded in browser");
+
 export function LoginForm() {
+  console.log("[LoginForm] 📝 LoginForm rendering...");
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -145,6 +149,7 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={isLoading}
+          onClick={() => console.log("[LoginForm] 🔘 Submit button clicked!")}
           className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-400 transition"
         >
           {isLoading ? "⏳ Iniciando sesión..." : "✓ Iniciar Sesión"}
