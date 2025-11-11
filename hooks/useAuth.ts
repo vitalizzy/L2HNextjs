@@ -79,12 +79,11 @@ export function useAuth() {
         setUser(data.user as User);
         setIsAuthenticated(true);
         
-        // Espera un poco para asegurar que la sesión está establecida
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Redirecciona a dashboard después del login exitoso
-        router.push("/dashboard");
+        // Retorna success para que el componente maneje la redirección
+        return { success: true };
       }
+      
+      throw new Error("No se recibió sesión");
     } catch (error) {
       console.error("Login error:", error);
       throw error;

@@ -34,8 +34,16 @@ export function LoginForm() {
       // Mostrar mensaje de carga
       setSuccess("Iniciando sesión...");
 
-      // Llamar al login (este automáticamente redirige a /dashboard)
-      await login(email, password);
+      // Llamar al login
+      const result = await login(email, password);
+      
+      if (result?.success) {
+        // Esperar un poco para asegurar que la sesión se sincronizó
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Redireccionar al dashboard
+        router.push("/dashboard");
+      }
     } catch (err) {
       if (err instanceof Error) {
         // Mapear errores comunes de Supabase
