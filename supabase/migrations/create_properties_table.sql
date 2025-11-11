@@ -12,10 +12,16 @@ CREATE TABLE IF NOT EXISTS properties (
 );
 
 -- Create index on user_id for faster queries
-CREATE INDEX idx_properties_user_id ON properties(user_id);
+CREATE INDEX IF NOT EXISTS idx_properties_user_id ON properties(user_id);
 
 -- Enable Row Level Security
 ALTER TABLE properties ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view their own properties" ON properties;
+DROP POLICY IF EXISTS "Users can insert their own properties" ON properties;
+DROP POLICY IF EXISTS "Users can update their own properties" ON properties;
+DROP POLICY IF EXISTS "Users can delete their own properties" ON properties;
 
 -- Policy: Users can view their own properties
 CREATE POLICY "Users can view their own properties"
