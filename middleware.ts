@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { createServerClient } from "@supabase/ssr";
 
 // Rutas que requieren autenticación
 const protectedRoutes = ["/dashboard", "/profile", "/change-password"];
@@ -9,12 +10,39 @@ const authRoutes = ["/login", "/register", "/forgot-password", "/reset-password"
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Obtener el token de sesión de las cookies
-  const supabaseToken = request.cookies.get("sb-auth-token")?.value;
+  // 1. ACTUALIZAR SESIÓN DE SUPABASE Y SINCRONIZAR COOKIES
+  let response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  });
 
-  // Si es una ruta protegida y no hay token, redirigir a login
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set(name, value, options);
+          });
+        },
+      },
+    }
+  );
+
+  // 2. OBTENER USUARIO ACTUAL
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // 3. PROTEGER RUTAS
+  // Si intenta acceder a ruta protegida SIN usuario, redirigir a login
   if (protectedRoutes.some((route) => pathname.startsWith(route))) {
-    if (!supabaseToken) {
+    if (!user) {
       const url = request.nextUrl.clone();
       url.pathname = "/login";
       url.searchParams.set("redirected", "true");
@@ -22,16 +50,17 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Si es una ruta de autenticación y hay token, redirigir a dashboard
+  // 4. PREVENIR RE-AUTENTICACIÓN
+  // Si intenta acceder a ruta de auth ESTANDO autenticado, redirigir a dashboard
   if (authRoutes.some((route) => pathname.startsWith(route))) {
-    if (supabaseToken) {
+    if (user) {
       const url = request.nextUrl.clone();
       url.pathname = "/dashboard";
       return NextResponse.redirect(url);
     }
   }
 
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {
