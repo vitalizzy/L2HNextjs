@@ -167,7 +167,7 @@ export function RegisterForm() {
             Acepto los{" "}
             <button
               type="button"
-              onClick={() => router.push("/privacy-policy")}
+              onClick={() => router.push("/terms-and-conditions")}
               className="text-blue-600 hover:underline cursor-pointer"
             >
               términos y condiciones
