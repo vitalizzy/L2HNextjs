@@ -28,7 +28,7 @@ export function RegisterForm() {
     }));
   };
 
-  // Countdown para redirigir a login después del registro
+  // Countdown para redirigir a onboarding después del registro
   useEffect((): (() => void) | void => {
     if (!registeredEmail) {
       return;
@@ -41,8 +41,8 @@ export function RegisterForm() {
       return () => clearTimeout(timer);
     }
     
-    if (redirectCountdown === 0) {
-      router.push("/login");
+    if (redirectCountdown === 0 && registeredEmail) {
+      router.push("/onboarding/properties");
     }
   }, [registeredEmail, redirectCountdown, router]);
 
@@ -174,7 +174,7 @@ export function RegisterForm() {
           </p>
 
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-center">
-            <p className="text-blue-900 font-semibold">Redirigiendo a login en {redirectCountdown} segundos...</p>
+            <p className="text-blue-900 font-semibold">Redirigiendo a agregar vivienda en {redirectCountdown} segundos...</p>
           </div>
 
           <button

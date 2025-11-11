@@ -53,6 +53,28 @@ export async function middleware(request: NextRequest) {
       url.searchParams.set("redirected", "true");
       return NextResponse.redirect(url);
     } else {
+      // 3.1 VERIFICAR PROPIEDADES ANTES DE ACCEDER AL DASHBOARD
+      if (pathname.startsWith("/dashboard")) {
+        console.log("[Middleware] Checking properties for user:", user.email);
+        
+        const { data: properties, error } = await supabase
+          .from("properties")
+          .select("id")
+          .eq("user_id", user.id)
+          .limit(1);
+
+        if (error) {
+          console.error("[Middleware] Error checking properties:", error.message);
+        }
+
+        if (!properties || properties.length === 0) {
+          console.log("[Middleware] User has no properties, redirecting to onboarding");
+          const url = request.nextUrl.clone();
+          url.pathname = "/onboarding/properties";
+          return NextResponse.redirect(url);
+        }
+      }
+
       console.log("[Middleware] User authorized for protected route:", pathname);
     }
   }
