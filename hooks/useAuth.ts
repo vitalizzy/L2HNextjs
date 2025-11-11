@@ -65,12 +65,24 @@ export function useAuth() {
       });
 
       if (error) {
+        // Mejores mensajes de error
+        if (error.message.includes("Invalid login credentials")) {
+          throw new Error("Email o contraseña incorrectos");
+        }
+        if (error.message.includes("Email not confirmed")) {
+          throw new Error("Por favor confirma tu email antes de iniciar sesión");
+        }
         throw error;
       }
 
-      if (data?.user) {
+      if (data?.session) {
         setUser(data.user as User);
         setIsAuthenticated(true);
+        
+        // Espera un poco para asegurar que la sesión está establecida
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Redirecciona a dashboard después del login exitoso
         router.push("/dashboard");
       }
     } catch (error) {

@@ -8,6 +8,7 @@ export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { login } = useAuth();
@@ -15,6 +16,7 @@ export function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
     setIsLoading(true);
 
     try {
@@ -29,13 +31,25 @@ export function LoginForm() {
         throw new Error("La contraseña debe tener al menos 6 caracteres");
       }
 
+      // Mostrar mensaje de carga
+      setSuccess("Iniciando sesión...");
+
+      // Llamar al login (este automáticamente redirige a /dashboard)
       await login(email, password);
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message);
+        // Mapear errores comunes de Supabase
+        if (err.message.includes("Invalid login credentials")) {
+          setError("❌ Email o contraseña incorrectos");
+        } else if (err.message.includes("Email not confirmed")) {
+          setError("⚠️ Por favor confirma tu email. Revisa tu bandeja de entrada.");
+        } else {
+          setError(`❌ ${err.message}`);
+        }
       } else {
-        setError("Error al iniciar sesión");
+        setError("❌ Error al iniciar sesión");
       }
+      setSuccess(null);
     } finally {
       setIsLoading(false);
     }
@@ -43,11 +57,25 @@ export function LoginForm() {
 
   return (
     <div className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Iniciar Sesión</h1>
+      <h1 className="text-2xl font-bold text-gray-900 mb-2">Iniciar Sesión</h1>
+      <p className="text-gray-600 text-sm mb-6">Accede a tu cuenta de L2H Community</p>
 
       {error && (
-        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-          {error}
+        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded flex items-start">
+          <span className="mr-2">🔴</span>
+          <div>
+            <p className="font-semibold">Error</p>
+            <p>{error}</p>
+          </div>
+        </div>
+      )}
+
+      {success && (
+        <div className="mb-4 p-3 bg-blue-100 border border-blue-400 text-blue-700 rounded flex items-start">
+          <span className="mr-2">⏳</span>
+          <div>
+            <p className="font-semibold">{success}</p>
+          </div>
         </div>
       )}
 
@@ -62,7 +90,7 @@ export function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            placeholder="ejemplo@correo.com"
+            placeholder="tu@correo.com"
             disabled={isLoading}
             required
           />
@@ -89,22 +117,23 @@ export function LoginForm() {
           disabled={isLoading}
           className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-400 transition"
         >
-          {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
+          {isLoading ? "⏳ Iniciando sesión..." : "✓ Iniciar Sesión"}
         </button>
       </form>
 
-      <div className="mt-6 text-center space-y-2">
-        <p className="text-sm text-gray-600">
+      <div className="mt-6 space-y-3 text-sm">
+        <div className="text-center text-gray-600 pb-3 border-b">
           ¿No tienes cuenta?{" "}
           <button
             type="button"
             onClick={() => router.push("/register")}
             className="text-blue-600 hover:underline font-semibold cursor-pointer"
           >
-            Registrate aquí
+            Regístrate aquí
           </button>
-        </p>
-        <p className="text-sm text-gray-600">
+        </div>
+
+        <div className="text-center text-gray-600">
           ¿Olvidaste tu contraseña?{" "}
           <button
             type="button"
@@ -113,7 +142,7 @@ export function LoginForm() {
           >
             Recuperarla
           </button>
-        </p>
+        </div>
       </div>
     </div>
   );

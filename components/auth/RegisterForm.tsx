@@ -13,6 +13,7 @@ export function RegisterForm() {
     gdprAccept: false,
   });
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { register } = useAuth();
@@ -28,6 +29,7 @@ export function RegisterForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
     setIsLoading(true);
 
     try {
@@ -60,14 +62,35 @@ export function RegisterForm() {
         throw new Error("Debes aceptar los términos y políticas de privacidad");
       }
 
+      // Mostrar mensaje de carga
+      setSuccess("Registrándote...");
+
       // Llamar al registro
-      await register(formData.email, formData.password, formData.nombre);
+      const result = await register(formData.email, formData.password, formData.nombre);
+      
+      if (result?.success) {
+        // Registro exitoso
+        setSuccess("✓ ¡Registrado! Revisa tu email para confirmar la cuenta.");
+        
+        // Esperar un poco y luego redirigir a login
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
+      }
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message);
+        // Mapear errores comunes de Supabase
+        if (err.message.includes("already registered")) {
+          setError("❌ Este email ya está registrado. Intenta con otro.");
+        } else if (err.message.includes("invalid")) {
+          setError(`❌ ${err.message}`);
+        } else {
+          setError(`❌ ${err.message}`);
+        }
       } else {
-        setError("Error al registrar");
+        setError("❌ Error al registrar");
       }
+      setSuccess(null);
     } finally {
       setIsLoading(false);
     }
@@ -75,18 +98,33 @@ export function RegisterForm() {
 
   return (
     <div className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Registrate</h1>
+      <h1 className="text-2xl font-bold text-gray-900 mb-2">Crear Cuenta</h1>
+      <p className="text-gray-600 text-sm mb-6">Únete a L2H Community hoy</p>
 
       {error && (
-        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-          {error}
+        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded flex items-start">
+          <span className="mr-2">🔴</span>
+          <div>
+            <p className="font-semibold">Error</p>
+            <p className="text-sm">{error}</p>
+          </div>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      {success && (
+        <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded flex items-start">
+          <span className="mr-2">✓</span>
+          <div>
+            <p className="font-semibold">Éxito</p>
+            <p className="text-sm">{success}</p>
+          </div>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-3">
         <div>
           <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">
-            Nombre
+            Nombre Completo
           </label>
           <input
             id="nombre"
@@ -95,7 +133,7 @@ export function RegisterForm() {
             value={formData.nombre}
             onChange={handleChange}
             className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Tu nombre completo"
+            placeholder="Juan Pérez"
             disabled={isLoading}
             required
           />
@@ -112,7 +150,7 @@ export function RegisterForm() {
             value={formData.email}
             onChange={handleChange}
             className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            placeholder="ejemplo@correo.com"
+            placeholder="tu@correo.com"
             disabled={isLoading}
             required
           />
@@ -129,10 +167,11 @@ export function RegisterForm() {
             value={formData.password}
             onChange={handleChange}
             className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            placeholder="••••••"
+            placeholder="Al menos 6 caracteres"
             disabled={isLoading}
             required
           />
+          <p className="text-xs text-gray-500 mt-1">Mínimo 6 caracteres</p>
         </div>
 
         <div>
@@ -146,29 +185,29 @@ export function RegisterForm() {
             value={formData.confirmPassword}
             onChange={handleChange}
             className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            placeholder="••••••"
+            placeholder="Repite la contraseña"
             disabled={isLoading}
             required
           />
         </div>
 
-        <div className="flex items-start">
+        <div className="flex items-start space-x-2 pt-2">
           <input
             id="gdprAccept"
             type="checkbox"
             name="gdprAccept"
             checked={formData.gdprAccept}
             onChange={handleChange}
-            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1 flex-shrink-0"
             disabled={isLoading}
             required
           />
-          <label htmlFor="gdprAccept" className="ml-2 block text-sm text-gray-700">
+          <label htmlFor="gdprAccept" className="block text-sm text-gray-700">
             Acepto los{" "}
             <button
               type="button"
               onClick={() => router.push("/terms-and-conditions")}
-              className="text-blue-600 hover:underline cursor-pointer"
+              className="text-blue-600 hover:underline cursor-pointer font-medium"
             >
               términos y condiciones
             </button>{" "}
@@ -176,7 +215,7 @@ export function RegisterForm() {
             <button
               type="button"
               onClick={() => router.push("/privacy-policy")}
-              className="text-blue-600 hover:underline cursor-pointer"
+              className="text-blue-600 hover:underline cursor-pointer font-medium"
             >
               política de privacidad
             </button>
@@ -186,13 +225,13 @@ export function RegisterForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-400 transition"
+          className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-400 transition mt-4"
         >
-          {isLoading ? "Registrando..." : "Registrate"}
+          {isLoading ? "⏳ Registrando..." : "✓ Registrate"}
         </button>
       </form>
 
-      <div className="mt-6 text-center">
+      <div className="mt-6 text-center border-t pt-4">
         <p className="text-sm text-gray-600">
           ¿Ya tienes cuenta?{" "}
           <button
