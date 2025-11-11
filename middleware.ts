@@ -4,7 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 const protectedRoutes = ["/dashboard", "/profile", "/change-password"];
 
 // Rutas que solo deben ser accesibles sin autenticación
-const authRoutes = ["/login", "/register", "/forgot-password", "/reset-password", "/change-password"];
+const authRoutes = ["/login", "/register", "/forgot-password", "/reset-password"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

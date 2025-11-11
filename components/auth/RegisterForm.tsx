@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -16,6 +16,7 @@ export function RegisterForm() {
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [registeredEmail, setRegisteredEmail] = useState<string | null>(null);
+  const [redirectCountdown, setRedirectCountdown] = useState(0);
   const router = useRouter();
   const { register } = useAuth();
 
@@ -26,6 +27,24 @@ export function RegisterForm() {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+
+  // Countdown para redirigir a login después del registro
+  useEffect((): (() => void) | void => {
+    if (!registeredEmail) {
+      return;
+    }
+    
+    if (redirectCountdown > 0) {
+      const timer = setTimeout(() => {
+        setRedirectCountdown(redirectCountdown - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+    
+    if (redirectCountdown === 0) {
+      router.push("/login");
+    }
+  }, [registeredEmail, redirectCountdown, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,6 +92,9 @@ export function RegisterForm() {
         // Guardar el email registrado y mostrar pantalla de confirmación
         setRegisteredEmail(formData.email);
         setSuccess(null);
+        
+        // Iniciar countdown de 5 segundos para redirigir a login
+        setRedirectCountdown(5);
       }
     } catch (err) {
       if (err instanceof Error) {
@@ -151,16 +173,21 @@ export function RegisterForm() {
             Una vez confirmes tu email, podrás acceder a tu cuenta.
           </p>
 
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-center">
+            <p className="text-blue-900 font-semibold">Redirigiendo a login en {redirectCountdown} segundos...</p>
+          </div>
+
           <button
             onClick={() => router.push("/login")}
             className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition mb-3"
           >
-            Ir a Iniciar Sesión
+            Ir a Iniciar Sesión Ahora
           </button>
 
           <button
             onClick={() => {
               setRegisteredEmail(null);
+              setRedirectCountdown(0);
               setFormData({
                 nombre: "",
                 email: "",
