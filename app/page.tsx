@@ -13,13 +13,13 @@ export default function Home() {
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
           <Link
-            href="/auth/login"
+            href="/login"
             className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
           >
             Iniciar Sesión
           </Link>
           <Link
-            href="/auth/register"
+            href="/register"
             className="px-8 py-3 bg-white text-blue-600 border-2 border-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition"
           >
             Registrarse

@@ -10,7 +10,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push("/auth/login");
+      router.push("/login");
     }
   }, [isAuthenticated, isLoading, router]);
 
@@ -42,7 +42,7 @@ export default function DashboardPage() {
               </p>
             </div>
             <button
-              onClick={() => window.location.href = "/auth/logout"}
+              onClick={() => window.location.href = "/logout"}
               className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
             >
               Cerrar Sesión

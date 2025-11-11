@@ -25,7 +25,7 @@ export default function ForgotPasswordPage() {
       }
 
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/reset-password`,
+        redirectTo: `${window.location.origin}/reset-password`,
       });
 
       if (resetError) throw resetError;
@@ -89,13 +89,13 @@ export default function ForgotPasswordPage() {
         <div className="mt-6 text-center space-y-2">
           <p className="text-sm text-gray-600">
             ¿Recuerdas tu contraseña?{" "}
-            <Link href="/auth/login" className="text-blue-600 hover:underline font-semibold">
+            <Link href="/login" className="text-blue-600 hover:underline font-semibold">
               Inicia sesión
             </Link>
           </p>
           <p className="text-sm text-gray-600">
             ¿No tienes cuenta?{" "}
-            <Link href="/auth/register" className="text-blue-600 hover:underline font-semibold">
+            <Link href="/register" className="text-blue-600 hover:underline font-semibold">
               Registrate aquí
             </Link>
           </p>

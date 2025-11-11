@@ -17,7 +17,7 @@ export default function ChangePasswordPage() {
 
   // Redirigir si no está autenticado
   if (!isAuthenticated) {
-    router.push("/auth/login");
+    router.push("/login");
     return null;
   }
 
@@ -46,9 +46,6 @@ export default function ChangePasswordPage() {
       if (newPassword === currentPassword) {
         throw new Error("La nueva contraseña debe ser diferente a la actual");
       }
-
-      // Primero hacer login con contraseña actual para verificar
-      const { login } = await import("@/hooks/useAuth");
 
       // Usar Supabase para actualizar contraseña
       const { createClient } = await import("@/lib/supabase/client");

@@ -50,7 +50,7 @@ export default function ResetPasswordPage() {
 
       setMessage("Contraseña actualizada correctamente. Redirigiendo al login...");
       setTimeout(() => {
-        router.push("/auth/login");
+        router.push("/login");
       }, 2000);
     } catch (err) {
       if (err instanceof Error) {
@@ -135,7 +135,7 @@ export default function ResetPasswordPage() {
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
             ¿Recordaste tu contraseña?{" "}
-            <Link href="/auth/login" className="text-blue-600 hover:underline font-semibold">
+            <Link href="/login" className="text-blue-600 hover:underline font-semibold">
               Inicia sesión
             </Link>
           </p>
