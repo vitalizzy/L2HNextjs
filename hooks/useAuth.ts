@@ -58,13 +58,26 @@ export function useAuth() {
 
   const login = async (email: string, password: string) => {
     try {
+      console.log("[useAuth.login] Starting login for email:", email);
       setIsLoading(true);
+      
+      console.log("[useAuth.login] Calling signInWithPassword...");
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
+      console.log("[useAuth.login] signInWithPassword response:");
+      console.log("[useAuth.login] - error:", error);
+      console.log("[useAuth.login] - data:", data);
+      console.log("[useAuth.login] - data.session:", data?.session);
+      console.log("[useAuth.login] - data.user:", data?.user);
+
       if (error) {
+        console.error("[useAuth.login] ❌ Error returned from Supabase:");
+        console.error("[useAuth.login] - message:", error.message);
+        console.error("[useAuth.login] - status:", error.status);
+        
         // Mejores mensajes de error
         if (error.message.includes("Invalid login credentials")) {
           throw new Error("Email o contraseña incorrectos");
@@ -75,19 +88,30 @@ export function useAuth() {
         throw error;
       }
 
+      console.log("[useAuth.login] ✅ No error from Supabase");
+
       if (data?.session) {
+        console.log("[useAuth.login] ✅ Session exists, setting authenticated state");
         setUser(data.user as User);
         setIsAuthenticated(true);
         
+        console.log("[useAuth.login] ✅ Returning success: true");
         // Retorna success para que el componente maneje la redirección
         return { success: true };
       }
       
+      console.error("[useAuth.login] ❌ No session in response");
       throw new Error("No se recibió sesión");
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("[useAuth.login] ❌ CATCH BLOCK - Login error:", error);
+      console.error("[useAuth.login] ❌ Error details:", {
+        message: error instanceof Error ? error.message : String(error),
+        name: error instanceof Error ? error.name : "Unknown",
+        stack: error instanceof Error ? error.stack : "N/A"
+      });
       throw error;
     } finally {
+      console.log("[useAuth.login] Finally block - setting isLoading to false");
       setIsLoading(false);
     }
   };

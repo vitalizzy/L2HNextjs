@@ -19,6 +19,8 @@ export function LoginForm() {
     setSuccess(null);
     setIsLoading(true);
 
+    console.log("[LoginForm] Starting login process...");
+
     try {
       // Validar email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,28 +33,39 @@ export function LoginForm() {
         throw new Error("La contraseña debe tener al menos 6 caracteres");
       }
 
+      console.log("[LoginForm] Validation passed, calling login()...");
+      
       // Mostrar mensaje de carga
       setSuccess("Iniciando sesión...");
 
       // Llamar al login
       const result = await login(email, password);
       
-      console.log("[LoginForm] Login result:", result);
+      console.log("[LoginForm] Login returned:", result);
+      console.log("[LoginForm] result?.success =", result?.success);
+      console.log("[LoginForm] typeof result =", typeof result);
       
       if (result?.success) {
-        console.log("[LoginForm] Login successful, waiting for session sync...");
+        console.log("[LoginForm] ✅ Login successful!");
+        setSuccess("✅ Login exitoso, redirigiendo...");
+        
         // Esperar un poco para asegurar que la sesión se sincronizó
         await new Promise(resolve => setTimeout(resolve, 1000));
         
-        console.log("[LoginForm] About to redirect to /dashboard");
+        console.log("[LoginForm] 🚀 About to redirect to /dashboard");
         // Redireccionar al dashboard
         router.push("/dashboard");
-        console.log("[LoginForm] router.push() executed");
+        console.log("[LoginForm] ✅ router.push() executed");
       } else {
-        console.warn("[LoginForm] Login failed:", result);
-        throw new Error("Login failed");
+        console.error("[LoginForm] ❌ Login failed - success is not true");
+        console.error("[LoginForm] Full result object:", JSON.stringify(result));
+        throw new Error("Login failed - no success flag");
       }
     } catch (err) {
+      console.error("[LoginForm] ❌ CATCH BLOCK - Error caught:", err);
+      console.error("[LoginForm] Error message:", err instanceof Error ? err.message : String(err));
+      console.error("[LoginForm] Full error:", JSON.stringify(err));
+      
       if (err instanceof Error) {
         // Mapear errores comunes de Supabase
         if (err.message.includes("Invalid login credentials")) {
@@ -67,6 +80,7 @@ export function LoginForm() {
       }
       setSuccess(null);
     } finally {
+      console.log("[LoginForm] Finally block - setting isLoading to false");
       setIsLoading(false);
     }
   };
