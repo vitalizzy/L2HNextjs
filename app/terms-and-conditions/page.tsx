@@ -10,7 +10,7 @@ export default function TermsAndConditionsPage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">1. Aceptación de Términos</h2>
             <p>
-              Al acceder y utilizar esta plataforma de gestión comunitaria ("Servicio"), aceptas estar vinculado por estos Términos y Condiciones. 
+              Al acceder y utilizar esta plataforma de gestión comunitaria (&quot;Servicio&quot;), aceptas estar vinculado por estos Términos y Condiciones. 
               Si no estás de acuerdo con cualquier parte de estos términos, no debes usar este Servicio.
             </p>
           </section>

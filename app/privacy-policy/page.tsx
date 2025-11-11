@@ -10,7 +10,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">1. Introducción</h2>
             <p>
-              L2H Community ("nosotros", "nuestro" o "la Plataforma") se compromete a proteger tu privacidad. 
+              L2H Community (&quot;nosotros&quot;, &quot;nuestro&quot; o &quot;la Plataforma&quot;) se compromete a proteger tu privacidad. 
               Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y almacenamos tu información.
             </p>
           </section>
