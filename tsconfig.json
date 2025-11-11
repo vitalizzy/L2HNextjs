@@ -27,7 +27,7 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "types": ["node"]
+    "types": ["node", "jest", "@testing-library/jest-dom"]
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
